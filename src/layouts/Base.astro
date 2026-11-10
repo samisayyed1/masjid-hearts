@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../site.config';
+import { url } from '../lib';
+interface Props { noindex?: boolean; title?: string; description?: string; overDark?: boolean; image?: string; type?: 'website' | 'article'; jsonld?: object | object[] }
+const { title, description = site.description, overDark = false, image, type = 'website', jsonld, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = new URL(image || url('/og.png'), Astro.site);
+const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: new URL(url('/'), Astro.site).href, logo: new URL(url('/apple-touch-icon.png'), Astro.site).href, description: site.description };
+const ld = [org, ...(jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [])];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#00483D" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+    <link rel="alternate" type="application/rss+xml" title="Masjid Hearts Journal" href={url('/rss.xml')} />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title || `${site.name}: ${site.tagline}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
+    {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d).replace(/</g, '\\u003c')} />)}
+    <script is:inline>if ('IntersectionObserver' in window) document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header overDark={overDark} />
+    <main id="main"><slot /></main>
+    <Footer />
+    <script>
+      // Reveal-on-scroll runs first so nothing below can leave content hidden.
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+
+      const header = document.querySelector<HTMLElement>('[data-header]')!;
+      const menu = document.querySelector<HTMLButtonElement>('[data-menu]')!;
+      const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 24);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      const setOpen = (open: boolean) => {
+        header.classList.toggle('open', open);
+        menu.setAttribute('aria-expanded', String(open));
+        document.documentElement.style.overflow = open ? 'hidden' : '';
+      };
+      menu.addEventListener('click', () => setOpen(!header.classList.contains('open')));
+      header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+      window.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+      window.matchMedia('(min-width: 821px)').addEventListener?.('change', () => setOpen(false));
+
+    </script>
+  </body>
+</html>

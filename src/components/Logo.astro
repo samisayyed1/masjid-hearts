@@ -1,0 +1,9 @@
+---
+import logo from '../data/logo.json';
+interface Props { title?: boolean }
+const { title = true } = Astro.props;
+---
+<svg viewBox="2900 7250 15250 6500" role={title ? 'img' : undefined} aria-label={title ? 'Masjid Hearts' : undefined} aria-hidden={title ? undefined : 'true'}>
+  <path fill="#CFB083" fill-rule="evenodd" d={logo.mark} />
+  <path fill="currentColor" d={logo.word} />
+</svg>

@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import Dome from '../components/Dome.astro';
+import { url } from '../lib';
+---
+<Base title="Page not found" overDark noindex>
+  <section class="nf dark">
+    <div class="wrap">
+      <div class="art"><Dome /></div>
+      <h1 class="display h1">This page is not here.</h1>
+      <p class="lede">The address may have changed, or the article may have moved. The journal and the home page are both a step away.</p>
+      <div class="row">
+        <a class="btn btn-gold" href={url('/')}>Go to the home page <Arrow /></a>
+        <a class="btn btn-ghost" href={url('/articles/')}>Read the journal</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { min-height: 100svh; display: grid; align-items: center; padding: 140px 0 80px; background: radial-gradient(120% 90% at 70% 20%, #0a5e50 0%, var(--green) 45%, var(--green-deep) 100%); }
+  .art { width: 120px; margin-bottom: 32px; }
+  .lede { margin-top: 20px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+</style>

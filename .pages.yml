@@ -1,0 +1,35 @@
+# Pages CMS (https://pagescms.org) — a free editor so articles can be written and
+# published in the browser without touching code. Sign in with GitHub and open this repository.
+media:
+  input: src/assets/articles
+  output: ../../assets/articles
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: src/content/articles
+    filename: '{primary}.md'
+    view:
+      fields: [title, category, date, draft]
+      sort: [date]
+      default: { sort: date, order: desc }
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: summary, label: Summary (one or two sentences, max 220 characters), type: text, required: true, options: { maxlength: 220 } }
+      - { name: date, label: Publish date, type: date, required: true }
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options: { values: [Faith, Community, Giving, Masajid] }
+      - { name: author, label: Author, type: string, default: Masjid Hearts }
+      - { name: cover, label: Cover photo (optional), type: image }
+      - { name: coverAlt, label: Describe the cover photo (for screen readers), type: string }
+      - name: motif
+        label: Cover pattern (used when there is no photo)
+        type: select
+        default: star
+        options: { values: [star, arch, lattice, dome] }
+      - { name: featured, label: Feature at the top of the home page, type: boolean, default: false }
+      - { name: draft, label: Draft (hidden from the site), type: boolean, default: false }
+      - { name: body, label: Article, type: rich-text }

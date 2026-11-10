@@ -1,0 +1,278 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Dome from '../components/Dome.astro';
+import Heart from '../components/Heart.astro';
+import Arrow from '../components/Arrow.astro';
+import Cover from '../components/Cover.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Network from '../components/Network.astro';
+import Contact from '../components/Contact.astro';
+import interior from '../assets/masjid-interior.jpg';
+import { getArticles, url, readingMinutes, formatDate } from '../lib';
+import { site, givingLevels } from '../site.config';
+
+const articles = await getArticles();
+const lead = articles.find((a) => a.data.featured) ?? articles[0];
+const rest = articles.filter((a) => a !== lead).slice(0, 3);
+const giveHref = (amount: number) => site.donateUrl || url(`/?give=${amount}#contact`);
+
+const work = [
+  { word: 'Build', line: 'A new masjid where a community has none.' },
+  { word: 'Restore', line: 'A masjid that has been damaged or has fallen into disrepair.' },
+  { word: 'Maintain', line: 'An existing place of worship, so it stays safe and open.' },
+  { word: 'Sustain', line: 'The community a masjid serves: its prayer, its Qur’an, its people.' },
+];
+---
+<Base overDark>
+  <!-- HERO -->
+  <section class="hero dark">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><Heart /> A global initiative for the houses of Allah</p>
+        <h1 class="display h1">Connect hearts to masajid, <em>wherever they are.</em></h1>
+        <p class="lede">One gift reaches a growing network of masajid, not just one. Together we build, repair and keep the doors open for houses of Allah in need.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href={url('/#how')}>See how it works <Arrow /></a>
+          <a class="btn btn-ghost" href={url('/articles/')}>Read the journal</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="halo" aria-hidden="true"></div>
+        <Dome />
+      </div>
+    </div>
+    <div class="wrap">
+      <ul class="hero-facts" role="list">
+        <li><strong>One gift</strong><span>A small monthly sadaqah, given once and renewed.</span></li>
+        <li><strong>Pooled together</strong><span>Every contribution joins those of other givers.</span></li>
+        <li><strong>Sent where it is needed</strong><span>Allocated to masajid according to need.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section class="section journal" id="journal">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <p class="eyebrow"><Heart /> The Journal</p>
+          <h2 class="display h2">Short reads on masajid, and why they matter.</h2>
+        </div>
+        <a class="link" href={url('/articles/')}>All articles <Arrow /></a>
+      </div>
+
+      {lead && (
+        <a class="lead" href={url(`/articles/${lead.id}/`)} data-reveal>
+          <Cover motif={lead.data.motif} image={lead.data.cover} alt={lead.data.coverAlt} id={`lead-${lead.id}`} wide />
+          <div class="lead-body">
+            <div class="meta"><span class="cat">{lead.data.category}</span><i></i><span>{readingMinutes(lead.body)} min read</span><i></i><span>{formatDate(lead.data.date)}</span></div>
+            <h3 class="display"><span>{lead.data.title}</span></h3>
+            <p>{lead.data.summary}</p>
+            <span class="link">Read the article <Arrow /></span>
+          </div>
+        </a>
+      )}
+
+      <div class="cards">
+        {rest.map((a, i) => <ArticleCard article={a} delay={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section mission mist" id="mission">
+    <div class="wrap mission-grid">
+      <div data-reveal>
+        <h2 class="eyebrow"><Heart /> Our mission</h2>
+        <p class="display statement">To multiply your ongoing charity by connecting your heart to an entire <em>global network of masajid.</em></p>
+      </div>
+      <div class="mission-copy" data-reveal style="--d:1">
+        <p>Most of us support one masjid: the one we pray in. Masjid Hearts lets a single donation reach across many communities worldwide, building, repairing and keeping the doors open for houses of Allah in urgent need.</p>
+        <p>One simple gift, an ever-growing network of masajid, and multiplied sadaqah jariyah (continuous charity) for your akhirah.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <ul class="work" role="list">
+        {work.map((w, i) => (
+          <li data-reveal style={`--d:${i}`}>
+            <span class="work-heart"><Heart /></span>
+            <h3 class="display">{w.word}</h3>
+            <p>{w.line}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how dark" id="how">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="wrap how-grid">
+      <div class="how-copy" data-reveal>
+        <p class="eyebrow"><Heart /> How it works</p>
+        <h2 class="display h2">One gift. <em>Many masajid.</em></h2>
+        <p class="lede">You do not choose a single building. Your sadaqah joins a shared fund, and the fund goes to the masajid whose need is greatest at the time.</p>
+        <ol class="steps" role="list">
+          <li><span class="n">1</span><div><h3>You give a small amount each month</h3><p>A steady gift, however modest, is what lets a masjid plan beyond this week.</p></div></li>
+          <li><span class="n">2</span><div><h3>It is pooled with other givers</h3><p>Small gifts combined are enough to lay a foundation or repair a roof.</p></div></li>
+          <li><span class="n">3</span><div><h3>It is allocated by need</h3><p>Funds go to building, restoring, maintaining or sustaining masajid where support is needed most.</p></div></li>
+        </ol>
+      </div>
+      <div class="how-art" data-reveal style="--d:1"><Network /></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <Image class="why-img" src={interior} alt="The prayer hall of a grand masjid: rows of red carpet running towards the mihrab beneath white arches and chandeliers." widths={[640, 960, 1280, 1634]} sizes="100vw" loading="lazy" />
+    <div class="why-shade" aria-hidden="true"></div>
+    <div class="wrap why-inner">
+      <figure data-reveal>
+        <blockquote class="display">“Whoever builds a masjid for Allah, Allah will build for him a house like it in Paradise.”</blockquote>
+        <figcaption>The Prophet Muhammad ﷺ <span>Sahih al-Bukhari 450 · Sahih Muslim 533</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- GIVE -->
+  <section class="section give" id="give">
+    <div class="wrap">
+      <div class="give-head" data-reveal>
+        <p class="eyebrow"><Heart /> Choose your monthly impact</p>
+        <h2 class="display h2">Help build, restore and sustain masajid.</h2>
+        <p class="lede">For a small monthly contribution, you help masajid remain places where generations come together to pray, learn Qur’an and strengthen their communities.</p>
+      </div>
+      <ul class="levels" role="list">
+        {givingLevels.map((l, i) => (
+          <li class:list={['level', { mid: i === 1 }]} data-reveal style={`--d:${i}`}>
+            <div class="hearts" aria-hidden="true">{Array.from({ length: l.masajid }).map(() => <Heart />)}</div>
+            <p class="amount"><span class="display">${l.amount}</span> / month</p>
+            <h3>Support {l.masajid} {l.masajid === 1 ? 'masjid' : 'masajid'}</h3>
+            <p class="line">{l.line}</p>
+            <a class:list={['btn', i === 1 ? 'btn-gold' : 'btn-green']} href={giveHref(l.amount)} data-give={l.amount}>Give ${l.amount} a month</a>
+          </li>
+        ))}
+      </ul>
+      <p class="fine" data-reveal>Giving levels are symbolic. All contributions are pooled and allocated based on the needs of masajid and the communities they serve.</p>
+    </div>
+  </section>
+
+  <Contact />
+</Base>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding: clamp(120px, 15vw, 176px) 0 0; background: radial-gradient(120% 90% at 78% 30%, #0a5e50 0%, var(--green) 42%, var(--green-deep) 100%); overflow: hidden; }
+  .hero-pattern {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23CFB083' stroke-width='1'%3E%3Crect x='21' y='21' width='58' height='58'/%3E%3Crect x='21' y='21' width='58' height='58' transform='rotate(45 50 50)'/%3E%3Cpath d='M0 50h9M91 50h9M50 0v9M50 91v9'/%3E%3C/g%3E%3C/svg%3E");
+    mask-image: linear-gradient(100deg, transparent 5%, #000 70%); -webkit-mask-image: linear-gradient(100deg, transparent 5%, #000 70%);
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: clamp(24px, 5vw, 72px); }
+  .hero-copy > * + * { margin-top: 26px; }
+  .hero-copy .lede { max-width: 50ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .hero-art { position: relative; max-width: 480px; width: 100%; justify-self: center; }
+  .halo { position: absolute; inset: -18%; border-radius: 50%; background: radial-gradient(closest-side, rgba(207, 176, 131, 0.22), transparent 70%); }
+  .hero-art :global(.dome) { position: relative; filter: drop-shadow(0 24px 40px rgba(0, 20, 16, 0.35)); }
+  .hero-facts { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line-light); }
+  .hero-facts li { padding: 26px 28px 34px 0; }
+  .hero-facts li + li { padding-left: 28px; border-left: 1px solid var(--line-light); }
+  .hero-facts strong { display: block; font-family: var(--display); font-weight: 650; font-size: 1.25rem; color: var(--gold-soft); }
+  .hero-facts span { display: block; margin-top: 4px; color: rgba(255, 255, 255, 0.74); font-size: 0.98rem; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 104px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+    .hero-art { order: -1; max-width: min(52vw, 230px); justify-self: start; margin: 0 0 12px -4px; }
+    .halo { inset: -30%; }
+    .hero-copy > * + * { margin-top: 20px; }
+    .hero-cta { margin-top: 28px; }
+    .hero-cta .btn { flex: 1 1 100%; }
+    .hero-facts { grid-template-columns: 1fr; margin-top: 44px; }
+    .hero-facts li, .hero-facts li + li { padding: 18px 0; border-left: 0; }
+    .hero-facts li + li { border-top: 1px solid var(--line-light); }
+    .hero-facts li:last-child { padding-bottom: 30px; }
+  }
+
+  /* ---------- Journal ---------- */
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 5vw, 56px); }
+  .sec-head h2 { margin-top: 14px; max-width: 18ch; }
+  .lead { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; text-decoration: none; color: inherit; padding-bottom: clamp(36px, 5vw, 60px); margin-bottom: clamp(36px, 5vw, 60px); border-bottom: 1px solid var(--line); }
+  .lead .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+  .lead .meta .cat { color: var(--gold-ink); }
+  .lead .meta i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+  .lead h3 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); margin-top: 16px; }
+  .lead h3 span { background: linear-gradient(var(--gold), var(--gold)) 0 100% / 0 2px no-repeat; transition: background-size 0.5s var(--ease); }
+  .lead:hover h3 span { background-size: 100% 2px; }
+  .lead p { margin-top: 16px; color: var(--ink-soft); font-size: 1.1rem; max-width: 46ch; }
+  .lead .link { margin-top: 24px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 40px); }
+  @media (max-width: 860px) {
+    .lead { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (min-width: 600px) and (max-width: 860px) { .cards { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- Mission ---------- */
+  .mission-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 6vw, 88px); align-items: end; }
+  .statement { font-size: clamp(1.9rem, 4.2vw, 3.3rem); line-height: 1.12; margin-top: 18px; color: var(--green); }
+  .mission-copy p { color: var(--ink-soft); font-size: 1.08rem; }
+  .mission-copy p + p { margin-top: 16px; }
+  .work { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(48px, 7vw, 88px); border-top: 1px solid var(--line); }
+  .work li { padding: 30px 24px 0 0; }
+  .work li + li { padding-left: 24px; border-left: 1px solid var(--line); }
+  .work-heart { display: block; width: 20px; color: var(--gold); margin-bottom: 18px; }
+  .work h3 { font-size: 1.7rem; color: var(--green); }
+  .work p { margin-top: 8px; color: var(--ink-soft); font-size: 0.99rem; }
+  @media (max-width: 860px) {
+    .mission-grid { grid-template-columns: 1fr; }
+    .work { grid-template-columns: 1fr 1fr; }
+    .work li, .work li + li { padding: 24px 16px 24px 0; border-left: 0; }
+    .work li:nth-child(even) { padding-left: 18px; border-left: 1px solid var(--line); }
+    .work li:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  }
+
+  /* ---------- How ---------- */
+  .how { position: relative; overflow: hidden; background: var(--green); }
+  .how-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .how-copy h2 { margin: 14px 0 20px; }
+  .steps { margin-top: 36px; display: grid; gap: 0; }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 22px 0; border-top: 1px solid var(--line-light); }
+  .steps .n { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); color: var(--gold); display: grid; place-items: center; font-family: var(--display); font-weight: 650; font-size: 1.15rem; }
+  .steps h3 { font-size: 1.1rem; font-weight: 650; }
+  .steps p { margin-top: 4px; color: rgba(255, 255, 255, 0.74); font-size: 0.99rem; }
+  @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } .how-art { order: -1; max-width: 520px; margin-inline: auto; width: 100%; } }
+
+  /* ---------- Why ---------- */
+  .why { position: relative; isolation: isolate; color: var(--white); min-height: min(86vh, 760px); display: grid; align-items: end; overflow: hidden; }
+  .why :global(.why-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .why-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 35, 30, 0.25) 0%, rgba(0, 35, 30, 0.55) 45%, rgba(0, 35, 30, 0.94) 100%); }
+  .why-inner { padding-block: clamp(64px, 10vw, 120px); }
+  .why blockquote { font-size: clamp(1.9rem, 4.6vw, 3.7rem); line-height: 1.1; max-width: 20ch; font-weight: 600; }
+  .why figcaption { margin-top: 28px; font-weight: 650; color: var(--gold-soft); }
+  .why figcaption span { display: block; font-weight: 500; font-size: 0.92rem; color: rgba(255, 255, 255, 0.72); margin-top: 2px; }
+
+  /* ---------- Give ---------- */
+  .give-head { max-width: 760px; }
+  .give-head h2 { margin: 14px 0 20px; }
+  .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: clamp(36px, 5vw, 60px); align-items: stretch; }
+  .level { display: flex; flex-direction: column; padding: clamp(26px, 3vw, 38px); border: 1px solid var(--line); border-radius: 22px; background: var(--white); transition: transform 0.35s var(--ease), box-shadow 0.35s, border-color 0.35s, opacity 0.7s var(--ease); }
+  .level:hover { transform: translateY(-4px); box-shadow: 0 26px 50px -30px rgba(0, 72, 61, 0.45); border-color: rgba(0, 72, 61, 0.3); }
+  .level.mid { background: var(--green); color: var(--white); border-color: var(--green); }
+  .level.mid :focus-visible { outline-color: var(--gold-soft); }
+  .hearts { display: flex; flex-wrap: wrap; gap: 5px; min-height: 44px; align-content: flex-start; color: var(--gold); }
+  .hearts :global(svg) { width: 17px; height: 17px; }
+  .amount { margin-top: 18px; color: var(--ink-soft); font-weight: 550; }
+  .amount .display { font-size: clamp(2.8rem, 5vw, 3.8rem); color: var(--green); margin-right: 4px; }
+  .mid .amount { color: rgba(255, 255, 255, 0.76); }
+  .mid .amount .display { color: var(--gold-soft); }
+  .level h3 { margin-top: 10px; font-size: 1.2rem; font-weight: 650; }
+  .level .line { margin-top: 8px; color: var(--ink-soft); flex: 1; }
+  .mid .line { color: rgba(255, 255, 255, 0.78); }
+  .level .btn { margin-top: 28px; width: 100%; }
+  .fine { margin-top: 26px; font-size: 0.93rem; color: var(--ink-soft); max-width: 70ch; }
+  @media (max-width: 900px) { .levels { grid-template-columns: 1fr; } .hearts { min-height: 0; } }
+</style>

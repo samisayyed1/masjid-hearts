@@ -1,0 +1,23 @@
+---
+import Logo from './Logo.astro';
+import { url } from '../lib';
+import { site } from '../site.config';
+interface Props { overDark?: boolean }
+const { overDark = false } = Astro.props;
+const path = Astro.url.pathname;
+const inArticles = path.includes('/articles');
+const give = site.donateUrl || url('/#give');
+---
+<header class:list={['site-header', { 'over-dark': overDark }]} data-header>
+  <div class="wrap bar">
+    <a class="brand" href={url('/')} aria-label="Masjid Hearts home"><Logo title={false} /></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu><span></span><span class="sr">Menu</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href={url('/#mission')}>Mission</a>
+      <a href={url('/#how')}>How it works</a>
+      <a href={url('/articles/')} aria-current={inArticles ? 'page' : undefined}>Journal</a>
+      <a href={url('/#contact')}>Contact</a>
+      <a class="btn btn-gold" href={give}>Give monthly</a>
+    </nav>
+  </div>
+</header>

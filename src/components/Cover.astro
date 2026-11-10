@@ -1,0 +1,59 @@
+---
+// Article cover. Uses the article's photo when it has one; otherwise draws a cover in the brand
+// colours from one of four motifs, so every article looks finished without stock photography.
+import { Image } from 'astro:assets';
+import dome from '../data/dome.json';
+interface Props { motif?: 'star' | 'arch' | 'lattice' | 'dome'; image?: ImageMetadata; alt?: string; id: string; eager?: boolean; wide?: boolean }
+const { motif = 'star', image, alt = '', id, eager = false, wide = false } = Astro.props;
+const pid = `p-${id.replace(/[^a-z0-9]/gi, '')}`;
+const arches = [0, 1, 2, 3, 4, 5];
+---
+<div class="cover">
+  {image ? (
+    <Image src={image} alt={alt} widths={[480, 800, 1200, 1600]} sizes={wide ? '(max-width: 900px) 100vw, 1200px' : '(max-width: 700px) 100vw, 600px'} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+  ) : (
+    <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id={`${pid}-g`} cx="50%" cy="38%" r="75%">
+          <stop offset="0" stop-color="#0a6455" /><stop offset="0.6" stop-color="#00483D" /><stop offset="1" stop-color="#002a23" />
+        </radialGradient>
+        {motif === 'star' && (
+          <pattern id={pid} width="100" height="100" patternUnits="userSpaceOnUse">
+            <g fill="none" stroke="#CFB083" stroke-width="1.4">
+              <rect x="21" y="21" width="58" height="58" /><rect x="21" y="21" width="58" height="58" transform="rotate(45 50 50)" />
+              <path d="M0 50h9M91 50h9M50 0v9M50 91v9" />
+            </g>
+          </pattern>
+        )}
+        {motif === 'lattice' && (
+          <pattern id={pid} width="72" height="72" patternUnits="userSpaceOnUse">
+            <g fill="none" stroke="#CFB083" stroke-width="1.4">
+              <path d="M36 0 72 36 36 72 0 36Z" /><circle cx="36" cy="36" r="13" /><path d="M0 0 12 12M72 0 60 12M0 72 12 60M72 72 60 60" />
+            </g>
+          </pattern>
+        )}
+      </defs>
+      <rect width="800" height="500" fill={`url(#${pid}-g)`} />
+      {(motif === 'star' || motif === 'lattice') && (
+        <g>
+          <rect width="800" height="500" fill={`url(#${pid})`} opacity="0.34" />
+          <circle cx="400" cy="250" r="120" fill="#00483D" />
+          <circle cx="400" cy="250" r="120" fill="none" stroke="#CFB083" stroke-width="1.4" />
+          <svg x="318" y="160" width="164" height="170" viewBox="4400 4150 12200 12700"><g fill="#CFB083">{dome.hearts.map((d) => <path d={d} />)}<path d={dome.finial} /></g></svg>
+        </g>
+      )}
+      {motif === 'arch' && (
+        <g fill="none" stroke="#CFB083" stroke-width="1.8">
+          {arches.map((i) => {
+            const w = 150 + i * 84, h = 250 + i * 70, x = 400 - w / 2, top = 500 - h;
+            return <path opacity={1 - i * 0.14} d={`M${x} 500V${top + w * 0.62}C${x} ${top + w * 0.2} ${400 - w * 0.18} ${top + w * 0.06} 400 ${top}C${400 + w * 0.18} ${top + w * 0.06} ${x + w} ${top + w * 0.2} ${x + w} ${top + w * 0.62}V500`} />;
+          })}
+          <svg x="361" y="360" width="78" height="81" viewBox="4400 4150 12200 12700"><g fill="#CFB083" stroke="none">{dome.hearts.map((d) => <path d={d} />)}<path d={dome.finial} /></g></svg>
+        </g>
+      )}
+      {motif === 'dome' && (
+        <svg x="250" y="96" width="300" height="311" viewBox="4400 4150 12200 12700"><g fill="#CFB083">{dome.hearts.map((d) => <path d={d} />)}<path d={dome.finial} /></g></svg>
+      )}
+    </svg>
+  )}
+</div>

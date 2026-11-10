@@ -1,0 +1,39 @@
+---
+import Logo from './Logo.astro';
+import { url } from '../lib';
+import { site } from '../site.config';
+const socials = Object.entries(site.social).filter(([, v]) => v);
+const label: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', x: 'X' };
+---
+<footer class="site-footer dark-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <Logo />
+        <p>{site.tagline}.</p>
+      </div>
+      <nav class="foot-col" aria-label="Footer">
+        <h2>Explore</h2>
+        <ul role="list">
+          <li><a href={url('/#mission')}>Mission</a></li>
+          <li><a href={url('/#how')}>How it works</a></li>
+          <li><a href={url('/articles/')}>Journal</a></li>
+          <li><a href={url('/#give')}>Give monthly</a></li>
+        </ul>
+      </nav>
+      <div class="foot-col">
+        <h2>Connect</h2>
+        <ul role="list">
+          <li><a href={url('/#contact')}>Get in touch</a></li>
+          {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+          {socials.map(([k, v]) => <li><a href={v} rel="noopener">{label[k]}</a></li>)}
+          <li><a href={url('/rss.xml')}>RSS feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© {new Date().getFullYear()} Masjid Hearts</span>
+      <span>Giving levels are symbolic. All contributions are pooled and allocated based on need.</span>
+    </div>
+  </div>
+</footer>

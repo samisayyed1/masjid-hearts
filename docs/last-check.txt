@@ -1,0 +1,6 @@
+
+> masjid-hearts@1.0.0 check
+> node scripts/check.mjs
+
+Checked 7 pages and 175 internal links.
+No problems found.

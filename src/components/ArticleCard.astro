@@ -1,0 +1,14 @@
+---
+import Cover from './Cover.astro';
+import { url, readingMinutes, formatDate, type Article } from '../lib';
+interface Props { article: Article; eager?: boolean; delay?: number }
+const { article, eager = false, delay = 0 } = Astro.props;
+const { data } = article;
+---
+<a class="card" href={url(`/articles/${article.id}/`)} data-reveal style={`--d:${delay}`} data-cat={data.category}>
+  <Cover motif={data.motif} image={data.cover} alt={data.coverAlt} id={article.id} eager={eager} />
+  <div class="meta"><span class="cat">{data.category}</span><i></i><span>{readingMinutes(article.body)} min read</span></div>
+  <h3><span>{data.title}</span></h3>
+  <p>{data.summary}</p>
+  <span class="sr">Published {formatDate(data.date)}</span>
+</a>

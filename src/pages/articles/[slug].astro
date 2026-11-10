@@ -1,0 +1,176 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+import Heart from '../../components/Heart.astro';
+import Arrow from '../../components/Arrow.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getArticles, url, readingMinutes, formatDate, type Article } from '../../lib';
+import { site } from '../../site.config';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+interface Props { article: Article }
+const { article } = Astro.props;
+const { data } = article;
+const { Content } = await render(article);
+const all = await getArticles();
+const others = all.filter((a) => a.id !== article.id);
+const related = [...others.filter((a) => a.data.category === data.category), ...others.filter((a) => a.data.category !== data.category)].slice(0, 3);
+const pageUrl = new URL(url(`/articles/${article.id}/`), Astro.site).href;
+const image = new URL(data.cover?.src ?? url('/og.png'), Astro.site).href;
+const jsonld = [
+  {
+    '@context': 'https://schema.org', '@type': 'Article', headline: data.title, description: data.summary,
+    datePublished: data.date.toISOString(), dateModified: (data.updated ?? data.date).toISOString(),
+    author: data.author === site.name ? { '@type': 'Organization', name: data.author, url: new URL(url('/'), Astro.site).href } : { '@type': 'Person', name: data.author },
+    publisher: { '@type': 'Organization', name: site.name, logo: { '@type': 'ImageObject', url: new URL(url('/apple-touch-icon.png'), Astro.site).href } },
+    image: [image], mainEntityOfPage: pageUrl, articleSection: data.category,
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(url('/'), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Journal', item: new URL(url('/articles/'), Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: data.title, item: pageUrl },
+    ],
+  },
+];
+const shareText = encodeURIComponent(`${data.title} · Masjid Hearts`);
+const shareUrl = encodeURIComponent(pageUrl);
+---
+<Base title={data.title} description={data.summary} type="article" image={data.cover?.src} jsonld={jsonld}>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={data.date.toISOString()} />
+    <meta property="article:section" content={data.category} />
+  </Fragment>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+  <article>
+    <header class="a-head">
+      <div class="wrap narrow">
+        <a class="back" href={url('/articles/')}><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 10h-13M8.5 5l-5 5 5 5" /></svg> The Journal</a>
+        <p class="eyebrow"><Heart /> {data.category}</p>
+        <h1 class="display">{data.title}</h1>
+        <p class="summary">{data.summary}</p>
+        <p class="byline"><span>{data.author}</span><i></i><time datetime={data.date.toISOString()}>{formatDate(data.date)}</time><i></i><span>{readingMinutes(article.body)} min read</span></p>
+      </div>
+      <div class="wrap a-cover"><Cover motif={data.motif} image={data.cover} alt={data.coverAlt} id={`hero-${article.id}`} eager wide /></div>
+    </header>
+
+    <div class="wrap narrow">
+      <div class="prose"><Content /></div>
+
+      <div class="share">
+        <span>Share this article</span>
+        <div>
+          <a href={`https://wa.me/?text=${shareText}%20${shareUrl}`} target="_blank" rel="noopener">WhatsApp<span class="sr"> (opens in a new tab)</span></a>
+          <a href={`https://x.com/intent/post?text=${shareText}&url=${shareUrl}`} target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener">Facebook<span class="sr"> (opens in a new tab)</span></a>
+          <button type="button" data-copy={pageUrl} aria-live="polite">Copy link</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="cta dark">
+    <div class="wrap cta-inner">
+      <div>
+        <p class="eyebrow"><Heart /> Masjid Hearts</p>
+        <h2 class="display h2">One gift. <em>Many masajid.</em></h2>
+        <p class="lede">A small monthly sadaqah, pooled and sent to masajid where the need is greatest.</p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn btn-gold" href={site.donateUrl || url('/#give')}>Give monthly <Arrow /></a>
+        <a class="btn btn-ghost" href={url('/#how')}>How it works</a>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section more">
+      <div class="wrap">
+        <div class="more-head">
+          <h2 class="display h2">Keep reading</h2>
+          <a class="link" href={url('/articles/')}>All articles <Arrow /></a>
+        </div>
+        <div class="grid">{related.map((a, i) => <ArticleCard article={a} delay={i} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  const art = document.querySelector<HTMLElement>('article');
+  if (bar && art) {
+    let ticking = false;
+    const update = () => {
+      const total = art.offsetHeight - window.innerHeight * 0.6;
+      const p = Math.min(1, Math.max(0, (window.scrollY - art.offsetTop) / total));
+      bar.style.transform = `scaleX(${p})`;
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) =>
+    b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(b.dataset.copy!); b.textContent = 'Link copied'; }
+      catch { b.textContent = 'Copy failed: copy the address bar'; }
+      setTimeout(() => (b.textContent = 'Copy link'), 2400);
+    }),
+  );
+</script>
+
+<style>
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; pointer-events: none; }
+  .progress span { display: block; height: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+  .narrow { max-width: 720px; }
+  .a-head { padding-top: clamp(112px, 13vw, 160px); }
+  .back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; text-decoration: none; font-weight: 600; font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 20px; }
+  .back svg { width: 16px; height: 16px; transition: transform 0.25s var(--ease); }
+  .back:hover { color: var(--green); }
+  .back:hover svg { transform: translateX(-4px); }
+  .a-head .eyebrow { display: flex; }
+  .a-head h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); margin-top: 16px; color: var(--green); }
+  .summary { margin-top: 22px; font-family: var(--serif); font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+  .byline { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 0.92rem; font-weight: 600; color: var(--ink-soft); }
+  .byline span:first-child { color: var(--ink); }
+  .byline i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+  .a-cover { margin-top: clamp(32px, 5vw, 56px); max-width: 1040px; }
+  .a-cover :global(.cover) { aspect-ratio: 16 / 8; border-radius: 22px; }
+
+  .prose { padding-top: clamp(36px, 5vw, 64px); font-family: var(--serif); font-size: clamp(1.18rem, 1.6vw, 1.3rem); line-height: 1.68; color: #17332e; }
+  .prose :global(> * + *) { margin-top: 1.25em; }
+  .prose :global(> p:first-child::first-letter) { font-family: var(--display); font-weight: 650; font-size: 3.5em; line-height: 0.82; float: left; padding: 0.08em 0.1em 0 0; color: var(--green); }
+  .prose :global(h2) { font-family: var(--display); font-weight: 650; font-size: clamp(1.55rem, 2.8vw, 2rem); line-height: 1.16; letter-spacing: -0.01em; color: var(--green); margin-top: 1.9em; text-wrap: balance; }
+  .prose :global(h3) { font-family: var(--sans); font-weight: 700; font-size: 1.12rem; margin-top: 1.7em; }
+  .prose :global(a) { color: var(--green); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+  .prose :global(a:hover) { text-decoration-color: var(--green); }
+  .prose :global(strong) { font-weight: 650; color: var(--ink); }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.2em; }
+  .prose :global(li + li) { margin-top: 0.5em; }
+  .prose :global(li::marker) { color: var(--gold-ink); }
+  .prose :global(blockquote) { margin: 1.8em 0; padding: 4px 0 4px 24px; border-left: 3px solid var(--gold); font-family: var(--display); font-style: italic; font-size: 1.2em; line-height: 1.35; color: var(--green); }
+  .prose :global(img) { border-radius: 16px; margin-block: 1.8em; }
+  .prose :global(hr) { border: 0; height: 1px; background: var(--line); margin: 2.4em 0; }
+
+  .share { margin: clamp(44px, 6vw, 72px) 0 var(--section); padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+  .share > span { font-weight: 650; }
+  .share div { display: flex; flex-wrap: wrap; gap: 8px; }
+  .share a, .share button { min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--line); background: none; color: var(--green); font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer; transition: border-color 0.2s, background-color 0.2s; }
+  .share a:hover, .share button:hover { border-color: var(--green); }
+
+  .cta { padding-block: clamp(56px, 8vw, 96px); }
+  .cta-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px; }
+  .cta h2 { margin: 14px 0 14px; }
+  .cta-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .more-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 48px); }
+  .more-head h2 { color: var(--green); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(36px, 4vw, 56px) clamp(24px, 3vw, 40px); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } .grid :global(.card:nth-child(3)) { display: none; } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .cta-btns, .cta-btns .btn { width: 100%; } }
+</style>
