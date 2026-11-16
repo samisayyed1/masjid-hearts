@@ -2,6 +2,14 @@
 import Logo from './Logo.astro';
 import { url } from '../lib';
 import { site } from '../site.config';
+import { t, type Lang } from '../i18n';
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const ar = lang === 'ar';
+const home = ar ? '/ar/' : '/';
+const f = t[lang].footer;
+const n = t[lang].nav;
+const tagline = ar ? t.ar.meta.tagline : site.tagline;
 const socials = Object.entries(site.social).filter(([, v]) => v);
 const label: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', x: 'X' };
 ---
@@ -10,30 +18,31 @@ const label: Record<string, string> = { instagram: 'Instagram', facebook: 'Faceb
     <div class="foot-grid">
       <div class="foot-brand">
         <Logo />
-        <p>{site.tagline}.</p>
+        <p>{tagline}.</p>
       </div>
-      <nav class="foot-col" aria-label="Footer">
-        <h2>Explore</h2>
+      <nav class="foot-col" aria-label={ar ? 'روابط التذييل' : 'Footer'}>
+        <h2>{f.explore}</h2>
         <ul role="list">
-          <li><a href={url('/#mission')}>Mission</a></li>
-          <li><a href={url('/#how')}>How it works</a></li>
-          <li><a href={url('/articles/')}>Journal</a></li>
-          <li><a href={url('/#give')}>Give monthly</a></li>
+          <li><a href={url(`${home}#mission`)}>{n.mission}</a></li>
+          <li><a href={url(`${home}#how`)}>{n.how}</a></li>
+          <li><a href={url('/articles/')} hreflang={ar ? 'en' : undefined}>{n.journal}{ar && <span class="lang-tag" lang="en">EN</span>}</a></li>
+          <li><a href={url(`${home}#give`)}>{n.give}</a></li>
         </ul>
       </nav>
       <div class="foot-col">
-        <h2>Connect</h2>
+        <h2>{f.connect}</h2>
         <ul role="list">
-          <li><a href={url('/#contact')}>Get in touch</a></li>
+          <li><a href={url(`${home}#contact`)}>{f.touch}</a></li>
           {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
           {socials.map(([k, v]) => <li><a href={v} rel="noopener">{label[k]}</a></li>)}
-          <li><a href={url('/rss.xml')}>RSS feed</a></li>
+          {!ar && <li><a href={url('/rss.xml')}>{f.rss}</a></li>}
+          <li><a href={ar ? url('/') : url('/ar/')} lang={ar ? 'en' : 'ar'} hreflang={ar ? 'en' : 'ar'}>{n.other}</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-base">
-      <span>© {new Date().getFullYear()} Masjid Hearts</span>
-      <span>Giving levels are symbolic. All contributions are pooled and allocated based on need.</span>
+      <span dir="ltr" lang="en">© {new Date().getFullYear()} Masjid Hearts</span>
+      <span>{f.note}</span>
     </div>
   </div>
 </footer>

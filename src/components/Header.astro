@@ -2,22 +2,29 @@
 import Logo from './Logo.astro';
 import { url } from '../lib';
 import { site } from '../site.config';
-interface Props { overDark?: boolean }
-const { overDark = false } = Astro.props;
+import { t, type Lang } from '../i18n';
+interface Props { overDark?: boolean; lang?: Lang }
+const { overDark = false, lang = 'en' } = Astro.props;
+const s = t[lang].nav;
+const ar = lang === 'ar';
+const home = ar ? '/ar/' : '/';
 const path = Astro.url.pathname;
 const inArticles = path.includes('/articles');
-const give = site.donateUrl || url('/#give');
+const give = site.donateUrl || url(`${home}#give`);
+// The other language's home page. Articles are English only, so from an article the switch goes to the Arabic home.
+const other = ar ? url('/') : url('/ar/');
 ---
 <header class:list={['site-header', { 'over-dark': overDark }]} data-header>
   <div class="wrap bar">
-    <a class="brand" href={url('/')} aria-label="Masjid Hearts home"><Logo title={false} /></a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu><span></span><span class="sr">Menu</span></button>
-    <nav class="nav" id="site-nav" aria-label="Main">
-      <a href={url('/#mission')}>Mission</a>
-      <a href={url('/#how')}>How it works</a>
-      <a href={url('/articles/')} aria-current={inArticles ? 'page' : undefined}>Journal</a>
-      <a href={url('/#contact')}>Contact</a>
-      <a class="btn btn-gold" href={give}>Give monthly</a>
+    <a class="brand" href={url(home)} aria-label={s.home}><Logo title={false} /></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu><span></span><span class="sr">{s.menu}</span></button>
+    <nav class="nav" id="site-nav" aria-label={ar ? 'القائمة الرئيسية' : 'Main'}>
+      <a href={url(`${home}#mission`)}>{s.mission}</a>
+      <a href={url(`${home}#how`)}>{s.how}</a>
+      <a href={url('/articles/')} aria-current={inArticles ? 'page' : undefined} hreflang={ar ? 'en' : undefined}>{s.journal}{ar && <span class="lang-tag" lang="en">EN</span>}</a>
+      <a href={url(`${home}#contact`)}>{s.contact}</a>
+      <a class="lang-switch" href={other} lang={ar ? 'en' : 'ar'} hreflang={ar ? 'en' : 'ar'} aria-label={s.otherLabel}>{s.other}</a>
+      <a class="btn btn-gold" href={give}>{s.give}</a>
     </nav>
   </div>
 </header>

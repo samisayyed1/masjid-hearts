@@ -1,6 +1,8 @@
 ---
 // One heart, many masajid: the giving model as a picture.
 import dome from '../data/dome.json';
+interface Props { label?: string }
+const { label = 'One heart at the bottom connected by lines to seven masajid above it.' } = Astro.props;
 const angles = [-156, -134, -112, -90, -68, -46, -24];
 const hx = 260, hy = 452;
 const nodes = angles.map((a, i) => {
@@ -12,7 +14,7 @@ const nodes = angles.map((a, i) => {
   return { x, y, size, d: `M${hx} ${hy - 36}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${(y + size * 0.56).toFixed(1)}` };
 });
 ---
-<svg class="net" viewBox="-70 84 660 436" role="img" aria-label="One heart at the bottom connected by lines to seven masajid above it.">
+<svg class="net" viewBox="-70 84 660 436" role="img" aria-label={label}>
   <defs>
     <symbol id="mini-dome" viewBox="4400 4150 12200 12700"><g fill="#CFB083">{dome.hearts.map((d) => <path d={d} />)}<path d={dome.finial} /></g></symbol>
   </defs>

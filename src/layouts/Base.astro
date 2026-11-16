@@ -4,16 +4,24 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../site.config';
 import { url } from '../lib';
-interface Props { noindex?: boolean; title?: string; description?: string; overDark?: boolean; image?: string; type?: 'website' | 'article'; jsonld?: object | object[] }
-const { title, description = site.description, overDark = false, image, type = 'website', jsonld, noindex = false } = Astro.props;
-const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tagline}`;
+import { t, type Lang } from '../i18n';
+interface Props { noindex?: boolean; title?: string; description?: string; overDark?: boolean; image?: string; type?: 'website' | 'article'; jsonld?: object | object[]; lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const s = t[lang];
+const { title, description = lang === 'en' ? site.description : s.meta.description, overDark = false, image, type = 'website', jsonld, noindex = false } = Astro.props;
+const tagline = lang === 'en' ? site.tagline : s.meta.tagline;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${tagline}`;
+// The home page exists in English (/) and Arabic (/ar/); tell search engines they are the same page.
+const bare = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isHome = bare === '/' || bare === '/ar/';
+const alt = (p: string) => new URL(url(p), Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const og = new URL(image || url('/og.png'), Astro.site);
 const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: new URL(url('/'), Astro.site).href, logo: new URL(url('/apple-touch-icon.png'), Astro.site).href, description: site.description };
 const ld = [org, ...(jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [])];
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -27,7 +35,9 @@ const ld = [org, ...(jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [])]
     <link rel="sitemap" href={url('/sitemap-index.xml')} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title || `${site.name}: ${site.tagline}`} />
+    <meta property="og:title" content={title || `${site.name}: ${tagline}`} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_GB'} />
+    {isHome && !noindex && <><link rel="alternate" hreflang="en" href={alt('/')} /><link rel="alternate" hreflang="ar" href={alt('/ar/')} /><link rel="alternate" hreflang="x-default" href={alt('/')} /></>}
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
@@ -37,10 +47,10 @@ const ld = [org, ...(jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [])]
     <script is:inline>if ('IntersectionObserver' in window) document.documentElement.classList.add('js');</script>
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <Header overDark={overDark} />
+    <a class="skip" href="#main">{s.skip}</a>
+    <Header overDark={overDark} lang={lang} />
     <main id="main"><slot /></main>
-    <Footer />
+    <Footer lang={lang} />
     <script>
       // Reveal-on-scroll runs first so nothing below can leave content hidden.
       const io = new IntersectionObserver(

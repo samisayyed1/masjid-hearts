@@ -2,43 +2,45 @@
 import Heart from './Heart.astro';
 import Arrow from './Arrow.astro';
 import { site } from '../site.config';
-const roles = ['I would like to give or support', 'I want to tell you about a masjid in need', 'I represent an organisation', 'Something else'];
+import { t, type Lang } from '../i18n';
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const c = t[lang].contact;
+const roles = c.roles;
 ---
 <section class="section contact mist" id="contact">
   <div class="wrap contact-grid">
     <div data-reveal>
-      <p class="eyebrow"><Heart /> Get in touch</p>
-      <h2 class="display h2">Let’s keep the doors of a masjid open, <em>together.</em></h2>
-      <p class="lede">Whether you want to give, partner with us, or tell us about a masjid that needs help, we would love to hear from you.</p>
+      <p class="eyebrow"><Heart /> {c.eyebrow}</p>
+      <h2 class="display h2">{c.h2} <em>{c.h2em}</em></h2>
+      <p class="lede">{c.lede}</p>
       <ul class="who" role="list">
-        <li><Heart /><div><strong>Giving</strong><span>Ask how monthly giving works and how contributions are allocated.</span></div></li>
-        <li><Heart /><div><strong>Masajid</strong><span>Know of a masjid in need? Tell us about it.</span></div></li>
-        <li><Heart /><div><strong>Working together</strong><span>Questions, ideas and partnership enquiries are welcome.</span></div></li>
+        {c.who.map(([k, v]) => <li><Heart /><div><strong>{k}</strong><span>{v}</span></div></li>)}
       </ul>
-      {site.email && <p class="direct">Or write to us directly: <a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>}
+      {site.email && <p class="direct">{c.direct} <a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>}
     </div>
 
-    <form class="form" data-reveal style="--d:1" data-contact data-endpoint={site.formEndpoint} data-email={site.email} method="post" action={site.formEndpoint || undefined} novalidate>
-      <div class="sr" aria-hidden="true"><label>Leave this empty <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label></div>
+    <form class="form" data-reveal style="--d:1" data-contact data-endpoint={site.formEndpoint} data-email={site.email} data-lang={lang} data-t={JSON.stringify(c.js)} method="post" action={site.formEndpoint || undefined} novalidate>
+      <div class="sr" aria-hidden="true"><label>{c.honeypot} <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label></div>
       <div class="field">
-        <label for="c-name">Your name</label>
+        <label for="c-name">{c.name}</label>
         <input id="c-name" name="name" type="text" autocomplete="name" required />
       </div>
       <div class="field">
-        <label for="c-email">Email address</label>
-        <input id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required />
+        <label for="c-email">{c.email}</label>
+        <input id="c-email" name="email" type="email" autocomplete="email" inputmode="email" dir="ltr" required />
       </div>
       <div class="field">
-        <label for="c-role">What brings you here?</label>
+        <label for="c-role">{c.role}</label>
         <select id="c-role" name="role">
           {roles.map((r) => <option>{r}</option>)}
         </select>
       </div>
       <div class="field">
-        <label for="c-msg">Your message</label>
+        <label for="c-msg">{c.message}</label>
         <textarea id="c-msg" name="message" rows="4" required></textarea>
       </div>
-      <button class="btn btn-green" type="submit">Send message <Arrow /></button>
+      <button class="btn btn-green" type="submit">{c.send} <Arrow /></button>
       <p class="status" id="c-status" role="status" aria-live="polite" data-status></p>
     </form>
   </div>
@@ -50,12 +52,14 @@ const roles = ['I would like to give or support', 'I want to tell you about a ma
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const msg = form.querySelector<HTMLTextAreaElement>('#c-msg')!;
     const say = (text: string, kind: 'ok' | 'error' | '' = '') => { status.textContent = text; status.dataset.kind = kind; };
+    const T = JSON.parse(form.dataset.t || '{}') as Record<string, string>;
+    const arDollars = (n: number) => { const r = n % 100; return n === 2 ? 'دولارين' : r >= 3 && r <= 10 ? 'دولارات' : r >= 11 && r <= 99 ? 'دولارًا' : 'دولار'; };
 
     // "Give $50 a month" buttons land here with the amount already written in.
     const fill = (amount: string | null) => {
       if (!amount || !/^\d+$/.test(amount)) return;
       (form.querySelector('#c-role') as HTMLSelectElement).selectedIndex = 0;
-      if (!msg.value) msg.value = `I would like to give $${amount} a month to Masjid Hearts. Please tell me how.`;
+      if (!msg.value) msg.value = T.prefill.replace('{amount}', amount).replace('{usd}', arDollars(Number(amount)));
     };
     fill(new URLSearchParams(location.search).get('give'));
     document.querySelectorAll<HTMLAnchorElement>('[data-give]').forEach((a) =>
@@ -77,28 +81,28 @@ const roles = ['I would like to give or support', 'I want to tell you about a ma
         invalid.setAttribute('aria-invalid', 'true');
         invalid.setAttribute('aria-describedby', 'c-status');
         invalid.focus();
-        say(invalid.type === 'email' ? 'Enter a valid email address so we can reply.' : 'Fill in every field so we can reply.', 'error');
+        say(invalid.type === 'email' ? T.badEmail : T.missing, 'error');
         return;
       }
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
       if (data._gotcha) return; // filled only by bots
       const { endpoint, email } = form.dataset;
       if (endpoint) {
-        say('Sending…');
+        say(T.sending);
         try {
           const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
-          say('Message sent. JazakAllahu khayran, we will reply soon.', 'ok');
+          say(T.sent, 'ok');
         } catch {
-          say(email ? `The message could not be sent. Email us at ${email} instead.` : 'The message could not be sent. Check your connection and send it again.', 'error');
+          say(email ? T.failEmail.replace('{email}', email) : T.fail, 'error');
         }
       } else if (email) {
         const body = `${data.message}\n\n${data.name}\n${data.email}\n${data.role}`;
         location.href = `mailto:${email}?subject=${encodeURIComponent('Masjid Hearts: ' + data.role)}&body=${encodeURIComponent(body)}`;
-        say('Your email app should now open with the message ready to send.', 'ok');
+        say(T.mailApp, 'ok');
       } else {
-        say('This form is not connected to an inbox yet. Please check back shortly.', 'error');
+        say(T.noInbox, 'error');
       }
     });
   }
@@ -118,7 +122,8 @@ const roles = ['I would like to give or support', 'I want to tell you about a ma
   label { font-weight: 650; font-size: 0.95rem; }
   input, select, textarea { width: 100%; min-height: 52px; padding: 13px 16px; border: 1.5px solid rgba(0, 72, 61, 0.55); border-radius: 12px; background: var(--white); font-size: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
   textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
-  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2300483D' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 44px; text-overflow: ellipsis; }
+  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2300483D' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-inline-end: 44px; text-overflow: ellipsis; }
+  :global([dir='rtl']) select { background-position: left 14px center; }
   input:hover, select:hover, textarea:hover { border-color: var(--green); }
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 4px rgba(207, 176, 131, 0.45); }
   [aria-invalid='true'] { border-color: #a4332b; border-width: 2px; }
