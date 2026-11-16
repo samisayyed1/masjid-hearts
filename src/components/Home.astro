@@ -8,7 +8,6 @@ import Cover from './Cover.astro';
 import ArticleCard from './ArticleCard.astro';
 import Network from './Network.astro';
 import Contact from './Contact.astro';
-import interior from '../assets/masjid-interior.jpg';
 import { getArticles, url, readingMinutes, formatDate } from '../lib';
 import { site, givingLevels } from '../site.config';
 import { t, type Lang } from '../i18n';
@@ -23,7 +22,12 @@ const articles = ar ? [] : await getArticles();
 const lead = articles.find((a) => a.data.featured) ?? articles[0];
 const rest = articles.filter((a) => a !== lead).slice(0, 3);
 const giveHref = (amount: number) => site.donateUrl || url(`${home}?give=${amount}#contact`);
-const brand = '<bdi lang="en">Masjid Hearts</bdi>';
+const brand = `<bdi lang="en">${site.name}</bdi>`;
+const esc = (v: string) => v.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+// The large photo is chosen in Site settings; any image placed in src/assets/site/ can be used.
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/site/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const photoName = (site.photo || '').split('/').pop();
+const interior = (Object.entries(photos).find(([p]) => p.endsWith('/' + photoName)) ?? Object.entries(photos)[0])[1].default;
 ---
 
 <Base overDark lang={lang}>
@@ -89,7 +93,7 @@ const brand = '<bdi lang="en">Masjid Hearts</bdi>';
         <p class="display statement">{s.mission.statement} <em>{s.mission.statementEm}</em></p>
       </div>
       <div class="mission-copy" data-reveal style="--d:1">
-        <p set:html={s.mission.p1.replace('{brand}', brand)} />
+        <p set:html={esc(s.mission.p1).replace('{brand}', brand)} />
         <p>{s.mission.p2}</p>
       </div>
     </div>
@@ -148,7 +152,7 @@ const brand = '<bdi lang="en">Masjid Hearts</bdi>';
             <div class="hearts" aria-hidden="true">{Array.from({ length: l.masajid }).map(() => <Heart />)}</div>
             <p class="amount"><bdi class="display" dir="ltr">${l.amount}</bdi> {s.give.perMonth}</p>
             <h3>{s.give.levels[l.amount]?.title}</h3>
-            <p class="line">{s.give.levels[l.amount]?.line ?? l.line}</p>
+            <p class="line">{s.give.levels[l.amount]?.line}</p>
             <a class:list={['btn', i === 1 ? 'btn-gold' : 'btn-green']} href={giveHref(l.amount)} data-give={l.amount}>{s.give.button(l.amount)}</a>
           </li>
         ))}

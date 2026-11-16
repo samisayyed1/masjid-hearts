@@ -4,10 +4,13 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "node scripts/validate-content.mjs && astro dev",
+    "build": "node scripts/validate-content.mjs && astro build && node scripts/export-wordpress.mjs --out dist/admin",
     "preview": "astro preview",
     "check": "node scripts/check.mjs",
+    "validate": "node scripts/validate-content.mjs",
+    "export:wordpress": "node scripts/export-wordpress.mjs",
+    "cms": "python3 scripts/cms-config.py",
     "og": "node scripts/og.mjs"
   },
   "dependencies": {

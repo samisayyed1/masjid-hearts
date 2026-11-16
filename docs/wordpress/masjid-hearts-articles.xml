@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Masjid Hearts articles for WordPress. Import: Tools → Import → WordPress. Tick "Download and import file attachments". -->
+<rss version="2.0"
+  xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.2/">
+<channel>
+  <title>Masjid Hearts</title>
+  <link>https://samisayyed1.github.io/masjid-hearts</link>
+  <description>Connect hearts to masajid, wherever they are</description>
+  <language>en-GB</language>
+  <wp:wxr_version>1.2</wp:wxr_version>
+  <wp:base_site_url>https://samisayyed1.github.io/masjid-hearts</wp:base_site_url>
+  <wp:base_blog_url>https://samisayyed1.github.io/masjid-hearts</wp:base_blog_url>
+  <wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[masjidhearts]]></wp:author_login><wp:author_email><![CDATA[]]></wp:author_email><wp:author_display_name><![CDATA[Masjid Hearts]]></wp:author_display_name></wp:author>
+  <wp:category><wp:term_id>1</wp:term_id><wp:category_nicename><![CDATA[faith]]></wp:category_nicename><wp:category_parent><![CDATA[]]></wp:category_parent><wp:cat_name><![CDATA[Faith]]></wp:cat_name></wp:category>
+  <wp:category><wp:term_id>2</wp:term_id><wp:category_nicename><![CDATA[giving]]></wp:category_nicename><wp:category_parent><![CDATA[]]></wp:category_parent><wp:cat_name><![CDATA[Giving]]></wp:cat_name></wp:category>
+  <wp:category><wp:term_id>3</wp:term_id><wp:category_nicename><![CDATA[masajid]]></wp:category_nicename><wp:category_parent><![CDATA[]]></wp:category_parent><wp:cat_name><![CDATA[Masajid]]></wp:cat_name></wp:category>
+  <wp:category><wp:term_id>4</wp:term_id><wp:category_nicename><![CDATA[community]]></wp:category_nicename><wp:category_parent><![CDATA[]]></wp:category_parent><wp:cat_name><![CDATA[Community]]></wp:cat_name></wp:category>
+
+  <item>
+    <title><![CDATA[A heart attached to the masjid]]></title>
+    <link>https://samisayyed1.github.io/masjid-hearts/articles/a-heart-attached-to-the-masjid/</link>
+    <pubDate>Mon, 09 Nov 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[masjidhearts]]></dc:creator>
+    <description></description>
+    <content:encoded><![CDATA[<p>The Prophet ﷺ described seven kinds of people whom Allah will shade on a day when there is no shade but His. One of them is easy to overlook between the just ruler and the one who gives charity in secret: <strong>a person whose heart is attached to the masajid</strong> (Sahih al-Bukhari 660, Sahih Muslim 1031).</p>
+<p>The wording is worth sitting with. It does not say the person who lives in the masjid, or who built it, or who leads the prayer in it. It describes a heart. Someone who leaves after Fajr and is already thinking about Dhuhr. Someone who feels the absence when travel or illness keeps them away.</p>
+<h2 id="why-the-masjid-of-all-places">Why the masjid, of all places</h2>
+<p>The Prophet ﷺ said, “The most beloved of places to Allah are the masajid” (Sahih Muslim 671). A masjid is the one building in a town that exists for no purpose other than remembering Allah. The Qur’an calls them houses “which Allah has ordered to be raised, and in which His name is remembered” (An-Nur 24:36).</p>
+<p>So a heart attached to the masjid is a heart attached to what Allah loves. The building is brick and carpet. What it holds is the prayer in congregation, the Qur’an being taught to children, the neighbour you only ever see in the second row.</p>
+<h2 id="what-attachment-looks-like">What attachment looks like</h2>
+<p>For most of us it is small and regular:</p>
+<ul>
+<li>Praying in congregation when we are able to, and missing it when we are not.</li>
+<li>Walking there. The Prophet ﷺ taught that for the one who purifies himself at home and walks to a house of Allah for an obligatory prayer, one step removes a sin and the next raises him a degree (Sahih Muslim 666).</li>
+<li>Caring about its upkeep: the leaking roof, the electricity bill, the imam’s salary.</li>
+<li>Bringing our children, so the attachment outlives us.</li>
+</ul>
+<h2 id="attached-to-masajid-you-will-never-enter">Attached to masajid you will never enter</h2>
+<p>There is a wider meaning too. A believer in one country can love a masjid in another: a village prayer hall with no roof, a community saving for years to lay a foundation. You may never pray there. But the people who do will pray because someone, somewhere, cared.</p>
+<p>That is the idea behind <a href="/#mission">Masjid Hearts</a>: to let one heart be attached to many masajid at once. If you would like to understand how a single gift is shared, read <a href="/#how">how it works</a>.</p>]]></content:encoded>
+    <excerpt:encoded><![CDATA[Among the seven people shaded on the Day of Judgement is one whose heart is tied to the masajid. What does that attachment look like in an ordinary week?]]></excerpt:encoded>
+    <wp:post_id>101</wp:post_id>
+    <wp:post_date><![CDATA[2026-11-09 00:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-11-09 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[a-heart-attached-to-the-masjid]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:is_sticky>1</wp:is_sticky>
+    <category domain="category" nicename="faith"><![CDATA[Faith]]></category>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_motif]]></wp:meta_key><wp:meta_value><![CDATA[dome]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_featured]]></wp:meta_key><wp:meta_value><![CDATA[1]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_author]]></wp:meta_key><wp:meta_value><![CDATA[Masjid Hearts]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <item>
+    <title><![CDATA[Sadaqah jariyah: the charity that keeps giving]]></title>
+    <link>https://samisayyed1.github.io/masjid-hearts/articles/sadaqah-jariyah-the-charity-that-keeps-giving/</link>
+    <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[masjidhearts]]></dc:creator>
+    <description></description>
+    <content:encoded><![CDATA[<p>The Prophet ﷺ said: “When a person dies, their deeds come to an end except for three: ongoing charity, knowledge that is benefited from, or a righteous child who prays for them” (Sahih Muslim 1631).</p>
+<p>The Arabic for the first of these is <strong>sadaqah jariyah</strong>. <em>Jariyah</em> means flowing, like a stream. It is charity that keeps moving after the giver has stopped.</p>
+<h2 id="what-makes-charity-ongoing">What makes charity “ongoing”</h2>
+<p>Ordinary sadaqah is a meal for someone hungry today. It is rewarded, and then it is finished. Sadaqah jariyah is something that stays in use: a well people draw from for decades, a book that keeps being read, a tree that keeps giving fruit.</p>
+<p>In another narration the Prophet ﷺ listed deeds that continue to reach a believer after death. Among them are knowledge that was taught, a copy of the Qur’an left behind, a house built for travellers, a stream made to flow, and <strong>a masjid that was built</strong> (Sunan Ibn Majah 242).</p>
+<h2 id="why-a-masjid-is-a-clear-example">Why a masjid is a clear example</h2>
+<p>Think about what happens inside one, every day, for as long as it stands:</p>
+<ul>
+<li>Every prayer offered in it.</li>
+<li>Every child who learns to read the Qur’an in it.</li>
+<li>Every person who finds their way back to Allah on its carpet.</li>
+</ul>
+<p>We hope that those who helped build that masjid, and those who help keep it standing, share in the reward of the good done inside it.</p>
+<h2 id="it-does-not-have-to-be-large">It does not have to be large</h2>
+<p>It is easy to assume this is for the wealthy. It is not. The Prophet ﷺ said that whoever builds a masjid for Allah, even one the size of a sandgrouse’s nest or smaller, Allah will build for them a house in Paradise (Sunan Ibn Majah 738). No one prays in a masjid the size of a bird’s nest. The image tells us that no contribution is too small to count.</p>
+<p>A small amount given regularly is also loved by Allah. Aishah (may Allah be pleased with her) reported that the Prophet ﷺ said the most beloved deeds to Allah are those done consistently, even if they are small (Sahih al-Bukhari 6464, Sahih Muslim 783).</p>
+<p>That is why Masjid Hearts is built around <a href="/#give">small monthly gifts</a>, pooled and shared across many masajid.</p>]]></content:encoded>
+    <excerpt:encoded><![CDATA[Most good deeds end when we do. A few continue. Here is what ongoing charity means, and why a masjid is one of its clearest examples.]]></excerpt:encoded>
+    <wp:post_id>102</wp:post_id>
+    <wp:post_date><![CDATA[2026-11-03 00:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-11-03 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[sadaqah-jariyah-the-charity-that-keeps-giving]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="giving"><![CDATA[Giving]]></category>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_motif]]></wp:meta_key><wp:meta_value><![CDATA[star]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_featured]]></wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_author]]></wp:meta_key><wp:meta_value><![CDATA[Masjid Hearts]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <item>
+    <title><![CDATA[What it takes to keep a masjid's doors open]]></title>
+    <link>https://samisayyed1.github.io/masjid-hearts/articles/what-it-takes-to-keep-a-masjids-doors-open/</link>
+    <pubDate>Fri, 30 Oct 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[masjidhearts]]></dc:creator>
+    <description></description>
+    <content:encoded><![CDATA[<p>When a masjid opens, there are photographs. A ribbon, a first adhan, rows of people on new carpet. Then the photographs stop, and the real work begins.</p>
+<p>A masjid is a building that is used five times a day, every day, by anyone who walks in. Few buildings are asked to do as much. Here is what stands behind an open door.</p>
+<h2 id="the-building-itself">The building itself</h2>
+<p>Roofs leak. Wiring ages. Carpets wear thin in the first rows before anywhere else. In hot climates, fans and cooling fail; in cold ones, heating does. Wudu areas need constant care because they are wet all day. Left alone, small problems become the kind that close a building.</p>
+<h2 id="the-running-costs">The running costs</h2>
+<p>Electricity and water come every month, whether the collection box is full or not. So do cleaning supplies, and repairs to the sound system that carries the adhan.</p>
+<h2 id="the-people">The people</h2>
+<p>A masjid needs an imam to lead the prayer and a teacher for the children. In many communities these are the same person, supported by a modest salary that the congregation struggles to raise. When that support stops, the classes stop first.</p>
+<h2 id="the-community-around-it">The community around it</h2>
+<p>In many places the masjid is also where food is shared in Ramadan, where a family in difficulty is helped, and where the dead are washed and prayed over. None of that appears on a building plan.</p>
+<h2 id="four-kinds-of-help">Four kinds of help</h2>
+<p>This is why we describe the work of Masjid Hearts in four words, not one:</p>
+<ul>
+<li><strong>Build</strong> a masjid where a community has none.</li>
+<li><strong>Restore</strong> one that has been damaged or has fallen into disrepair.</li>
+<li><strong>Maintain</strong> an existing place of worship so it stays safe and usable.</li>
+<li><strong>Sustain</strong> the community it serves.</li>
+</ul>
+<p>Building is the part people picture. The other three are what keep a masjid in use long after it opens.</p>
+<p>Read more about <a href="/articles/why-the-masjid-is-the-heart-of-a-community/">why the masjid is the heart of a community</a>, or see <a href="/#how">how one gift is shared across many masajid</a>.</p>]]></content:encoded>
+    <excerpt:encoded><![CDATA[Building a masjid is the visible part. The quiet work is everything that follows — and it never ends.]]></excerpt:encoded>
+    <wp:post_id>103</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-30 00:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-30 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[what-it-takes-to-keep-a-masjids-doors-open]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="masajid"><![CDATA[Masajid]]></category>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_motif]]></wp:meta_key><wp:meta_value><![CDATA[lattice]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_featured]]></wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_author]]></wp:meta_key><wp:meta_value><![CDATA[Masjid Hearts]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <item>
+    <title><![CDATA[Why the masjid is the heart of a community]]></title>
+    <link>https://samisayyed1.github.io/masjid-hearts/articles/why-the-masjid-is-the-heart-of-a-community/</link>
+    <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[masjidhearts]]></dc:creator>
+    <description></description>
+    <content:encoded><![CDATA[<p>When the Prophet ﷺ migrated from Makkah, he stopped at Quba on the edge of Madinah and a masjid was built there. When he reached the city itself, the first thing he established was his masjid. Homes came after. A community was being formed, and it needed a centre before it needed anything else.</p>
+<h2 id="more-than-a-prayer-hall">More than a prayer hall</h2>
+<p>The Prophet’s Masjid was where the five prayers were held. It was also where people learned the Qur’an, where those with no home were sheltered, where delegations were received and where the community was consulted on its affairs. Worship came first, and everything else a community needs grew around it.</p>
+<p>That pattern has held ever since. Walk into a working masjid anywhere in the world and you will usually find some of the same things:</p>
+<ul>
+<li><strong>Prayer in congregation</strong>, five times a day and on Fridays.</li>
+<li><strong>Learning</strong>: children reciting, adults studying, questions being answered.</li>
+<li><strong>Care</strong>: food shared in Ramadan, help quietly arranged for a family in difficulty, the janazah of a neighbour.</li>
+<li><strong>Belonging</strong>: a place where a newcomer is greeted and a young person is known by name.</li>
+</ul>
+<h2 id="what-a-town-loses-without-one">What a town loses without one</h2>
+<p>The opposite is also true. Where there is no masjid, or where one has fallen into disrepair, the prayer becomes private and scattered. Children grow up without a place to learn. People who would have met five times a day stop meeting at all.</p>
+<p>This is why the Qur’an ties the care of masajid to faith itself: “The mosques of Allah are only to be maintained by those who believe in Allah and the Last Day…” (At-Tawbah 9:18). The verse goes on to mention prayer, zakah and fearing none but Allah. Maintaining a masjid is described as something believers do, like prayer and charity.</p>
+<h2 id="keeping-the-heart-beating">Keeping the heart beating</h2>
+<p>A masjid is built once, but it is kept alive every day: by the people who fill it and by the people who pay for the lights, the water, the repairs and the teacher. Both are part of the same work.</p>
+<p>If you want to see what that upkeep involves, read <a href="/articles/what-it-takes-to-keep-a-masjids-doors-open/">what it takes to keep a masjid’s doors open</a>.</p>]]></content:encoded>
+    <excerpt:encoded><![CDATA[When the Prophet ﷺ arrived in Madinah, the first thing he built was a masjid. Fourteen centuries later, a community still forms around the same place.]]></excerpt:encoded>
+    <wp:post_id>104</wp:post_id>
+    <wp:post_date><![CDATA[2026-11-06 00:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-11-06 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[why-the-masjid-is-the-heart-of-a-community]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="community"><![CDATA[Community]]></category>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_motif]]></wp:meta_key><wp:meta_value><![CDATA[arch]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_featured]]></wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key><![CDATA[mh_author]]></wp:meta_key><wp:meta_value><![CDATA[Masjid Hearts]]></wp:meta_value></wp:postmeta>
+  </item>
+</channel>
+</rss>

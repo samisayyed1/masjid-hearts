@@ -10,8 +10,8 @@ const home = ar ? '/ar/' : '/';
 const f = t[lang].footer;
 const n = t[lang].nav;
 const tagline = ar ? t.ar.meta.tagline : site.tagline;
-const socials = Object.entries(site.social).filter(([, v]) => v);
-const label: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', x: 'X' };
+const socials = Object.entries(site.social).filter(([, v]) => /^https?:\/\//.test(v || ''));
+const label: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', x: 'X', linkedin: 'LinkedIn', tiktok: 'TikTok' };
 ---
 <footer class="site-footer dark-foot">
   <div class="wrap">

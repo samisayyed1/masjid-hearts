@@ -1,0 +1,29 @@
+{
+  "name": "Masjid Hearts",
+  "email": "",
+  "formEndpoint": "",
+  "donateUrl": "",
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "youtube": "",
+    "x": "",
+    "linkedin": "",
+    "tiktok": ""
+  },
+  "givingLevels": [
+    {
+      "amount": 10,
+      "masajid": 1
+    },
+    {
+      "amount": 50,
+      "masajid": 5
+    },
+    {
+      "amount": 100,
+      "masajid": 10
+    }
+  ],
+  "photo": "src/assets/site/masjid-interior.jpg"
+}

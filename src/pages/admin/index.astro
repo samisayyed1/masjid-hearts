@@ -1,0 +1,125 @@
+---
+// The site's "back office": one page that links to the browser editor, shows what still needs filling in,
+// and gives the web developer everything needed to move the site to WordPress. Hidden from search engines.
+import Base from '../../layouts/Base.astro';
+import Heart from '../../components/Heart.astro';
+import Arrow from '../../components/Arrow.astro';
+import { site, givingLevels } from '../../site.config';
+import { getCollection } from 'astro:content';
+import { url, formatDate } from '../../lib';
+
+const repo = process.env.GITHUB_REPOSITORY || 'samisayyed1/masjid-hearts';
+const gh = `https://github.com/${repo}`;
+const editor = `https://app.pagescms.org/${repo}/main`;
+const all = (await getCollection('articles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const live = all.filter((a) => !a.data.draft).length;
+const socials = Object.values(site.social).filter(Boolean).length;
+const built = new Date();
+
+const todo = [
+  { label: 'Contact email', done: !!site.email, value: site.email, why: 'Shown in the footer. The contact form needs it (or a form service URL) to deliver messages.' },
+  { label: 'Donation page link', done: !!site.donateUrl, value: site.donateUrl, why: 'Until it is set, every “Give” button opens the contact form with the amount pre-written.' },
+  { label: 'Form service URL', done: !!site.formEndpoint, value: site.formEndpoint, why: 'Optional. Lets the form send messages directly instead of opening the visitor’s email app.' },
+  { label: 'Social links', done: socials > 0, value: socials ? `${socials} linked` : '', why: 'Optional. Each one appears in the footer.' },
+];
+
+const areas = [
+  { h: 'Articles', p: 'Write, edit, schedule or unpublish articles. Change the thumbnail (cover photo), summary, category, author and date. Mark one as featured to put it in the large slot on the home page.' },
+  { h: 'Site settings', p: 'Contact email, donation link, form service, social links, the monthly giving amounts and the large photo on the home page.' },
+  { h: 'Home page text (English)', p: 'Every heading, paragraph, button and form message on the home page, menu and footer.' },
+  { h: 'Home page text (Arabic)', p: 'The same, for the Arabic home page at /ar/.' },
+];
+---
+<Base title="Edit the website" description="Editing, publishing and handover tools for the Masjid Hearts website. For the Masjid Hearts team." noindex>
+  <section class="top mist">
+    <div class="wrap">
+      <p class="eyebrow"><Heart /> For the Masjid Hearts team</p>
+      <h1 class="display h1">Edit the website.</h1>
+      <p class="lede">Articles, thumbnails, settings and every line of text on the home page can be changed in the browser. Each save publishes itself in about two minutes.</p>
+      <div class="row">
+        <a class="btn btn-green" href={editor} rel="noopener">Open the editor <Arrow /></a>
+        <a class="btn btn-line" href={`${gh}/blob/main/EDITING.md`} rel="noopener">How editing works</a>
+      </div>
+      <p class="small">Sign in with a GitHub account that has been given access to <a class="link" href={gh} rel="noopener">{repo}</a>. Ask the site owner to add you under Settings → Collaborators.</p>
+    </div>
+  </section>
+
+  <section class="body">
+    <div class="wrap grid">
+      <div class="panel">
+        <h2 class="display h3">What you can edit</h2>
+        <ul class="areas" role="list">
+          {areas.map((a) => <li><strong>{a.h}</strong><span>{a.p}</span></li>)}
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2 class="display h3">Still to fill in</h2>
+        <ul class="todo" role="list">
+          {todo.map((t) => (
+            <li class:list={{ done: t.done }}>
+              <span class="dot" aria-hidden="true"></span>
+              <div><strong>{t.label}</strong> <span class="state">{t.done ? 'Set' : 'Not set'}</span>{t.value && <code>{t.value}</code>}<span class="why">{t.why}</span></div>
+            </li>
+          ))}
+        </ul>
+        <p class="small">Change these under <em>Site settings</em> in the editor.</p>
+      </div>
+
+      <div class="panel">
+        <h2 class="display h3">Articles</h2>
+        <p class="stat"><span class="display">{live}</span> published{all.length - live > 0 && <> · {all.length - live} draft</>}</p>
+        <ul class="arts" role="list">
+          {all.map((a) => (
+            <li>
+              {a.data.draft ? <span>{a.data.title}</span> : <a class="link" href={url(`/articles/${a.id}/`)}>{a.data.title}</a>}
+              <span class="meta">{a.data.category} · {formatDate(a.data.date)}{a.data.draft && ' · Draft'}{a.data.featured && ' · Featured'}{a.data.cover ? ' · Photo' : ' · Pattern cover'}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="small">Giving amounts on the site: {givingLevels.map((l) => `$${l.amount}`).join(', ')} a month.</p>
+      </div>
+
+      <div class="panel dark-panel">
+        <h2 class="display h3">For the web developer</h2>
+        <p>Moving the site to WordPress? Everything is in the repository and this download:</p>
+        <ul class="dev" role="list">
+          <li><a class="link" href={url("/admin/masjid-hearts-articles.xml")} download>WordPress import file (all articles)</a><span>Tools → Import → WordPress. Rebuilt with every publish.</span></li>
+          <li><a class="link" href={`${gh}/blob/main/WORDPRESS.md`} rel="noopener">WordPress handover guide</a><span>Page map, content model, design tokens, fonts and assets.</span></li>
+          <li><a class="link" href={gh} rel="noopener">Source code on GitHub</a><span>Site text and settings are plain JSON in <code>src/content/site/</code>.</span></li>
+          <li><a class="link" href={`${gh}/actions`} rel="noopener">Publishing history</a><span>Each save shows here; a red cross means the change was not published.</span></li>
+        </ul>
+        <p class="small">This copy built {built.toUTCString().replace(' GMT', ' UTC')}.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top { padding: clamp(130px, 16vw, 180px) 0 clamp(48px, 7vw, 80px); }
+  .top .lede { margin-top: 18px; max-width: 46ch; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .small { margin-top: 18px; color: var(--ink-soft); font-size: 0.93rem; max-width: 62ch; }
+  .body { padding: clamp(40px, 6vw, 72px) 0 var(--section); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(22px, 3vw, 34px); min-width: 0; }
+  .panel h2 { color: var(--green); margin-bottom: 14px; }
+  .areas li, .todo li, .arts li, .dev li { padding: 14px 0; border-top: 1px solid var(--line); }
+  .areas strong, .dev a { display: block; font-weight: 650; }
+  .areas span, .why, .dev span, .meta { display: block; color: var(--ink-soft); font-size: 0.93rem; margin-top: 3px; }
+  .todo li { display: grid; grid-template-columns: 12px 1fr; gap: 14px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; background: #c2410c; }
+  .done .dot { background: var(--green); }
+  .state { font-size: 0.8rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: #9a3412; }
+  .done .state { color: var(--green); }
+  code { display: block; margin-top: 4px; font-size: 0.85rem; overflow-wrap: anywhere; color: var(--ink); }
+  .stat { color: var(--ink-soft); margin-bottom: 8px; }
+  .stat .display { font-size: 2.4rem; color: var(--green); margin-inline-end: 6px; }
+  .dark-panel { background: var(--green); border-color: var(--green); color: var(--white); }
+  .dark-panel h2 { color: var(--gold); }
+  .dark-panel li { border-color: var(--line-light); }
+  .dark-panel .link, .dark-panel a { color: var(--white); }
+  .dark-panel span, .dark-panel .small { color: rgba(255, 255, 255, 0.74); }
+  .dark-panel code { color: var(--gold-soft); display: inline; }
+</style>

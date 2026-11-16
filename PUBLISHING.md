@@ -43,7 +43,7 @@ A [link to another article](/articles/a-heart-attached-to-the-masjid/) and a lin
 | `date` | yes | `YYYY-MM-DD`. Newest articles appear first |
 | `category` | yes | One of `Faith`, `Community`, `Giving`, `Masajid` |
 | `author` | no | Defaults to "Masjid Hearts" |
-| `cover` | no | A photo, e.g. `../../assets/articles/my-photo.jpg`. Put the photo in `src/assets/articles/` |
+| `cover` | no | The thumbnail / cover photo, e.g. `../../assets/articles/my-photo.jpg`. Put the photo in `src/assets/articles/` |
 | `coverAlt` | with a photo | One sentence describing the photo |
 | `motif` | no | Cover pattern when there is no photo: `star`, `arch`, `lattice` or `dome` |
 | `featured` | no | `true` puts the article in the large slot on the home page |

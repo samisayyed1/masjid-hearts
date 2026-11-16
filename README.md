@@ -5,26 +5,21 @@ The website for Masjid Hearts: a home page, an articles portal ("The Journal") a
 - **Home** `/` — mission, how giving works, the latest articles, monthly giving levels, contact form
 - **Journal** `/articles/` — every published article, filterable by topic
 - **Article** `/articles/<name>/` — reading layout with share links and related articles
+- **Arabic home** `/ar/`
+- **Admin** `/admin/` — editing links, setup checklist and WordPress export (hidden from search engines)
 - RSS feed, sitemap and search-engine metadata are generated automatically
 
 Built with [Astro](https://astro.build). The site is plain HTML and CSS once built, so it is fast and can be hosted anywhere.
 
-## Publish an article
+## Edit the site (no code)
 
-See **[PUBLISHING.md](PUBLISHING.md)**. In short: add one Markdown file to `src/content/articles/`, and the site rebuilds and publishes itself.
+Articles, thumbnails, settings and every line of home page text are edited in the browser with Pages CMS. The site's **`/admin/`** page is the starting point: it links to the editor, lists what is still to fill in, and offers the WordPress export.
 
-## Things to fill in
+- **[EDITING.md](EDITING.md)**: how editing works, and what each section of the editor contains
+- **[PUBLISHING.md](PUBLISHING.md)**: writing articles in detail
+- **[WORDPRESS.md](WORDPRESS.md)**: handover guide for moving the site to WordPress
 
-Everything is in [`src/site.config.ts`](src/site.config.ts):
-
-| Setting | What it does | Status |
-| --- | --- | --- |
-| `email` | Shown in the footer; the contact form opens an email to it | **empty** |
-| `formEndpoint` | Optional form service URL so the contact form sends without an email app | empty |
-| `donateUrl` | Where the "Give monthly" buttons go. While empty they lead to the contact form | **empty** |
-| `social` | Footer links | empty |
-
-Until `email` or `formEndpoint` is set, the contact form tells visitors it is not connected yet.
+Settings still to fill in (in the editor under *Site settings*, or `src/content/site/settings.json`): **contact email**, **donation page link**, optional form service URL and social links. Until the email or form URL is set, the contact form tells visitors it is not connected yet.
 
 ## Run it on your computer
 
@@ -33,6 +28,9 @@ npm install
 npm run dev      # preview at http://localhost:4321
 npm run build    # build into dist/
 npm run check    # checks the built site for broken links, missing titles and alt text
+npm run validate # checks the editable content files (also runs before every build)
+npm run export:wordpress  # writes docs/wordpress/masjid-hearts-articles.xml
+npm run cms      # regenerates the editor layout (.pages.yml)
 ```
 
 ## Hosting and domain

@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "tagline": "Connect hearts to masajid, wherever they are",
+    "description": "Masjid Hearts is a global initiative that connects one gift to a growing network of masajid: building, restoring and keeping the doors open for houses of Allah in need."
+  },
+  "skip": "Skip to content",
+  "nav": {
+    "home": "Masjid Hearts home",
+    "menu": "Menu",
+    "mission": "Mission",
+    "how": "How it works",
+    "journal": "Journal",
+    "contact": "Contact",
+    "give": "Give monthly",
+    "other": "العربية",
+    "otherLabel": "اقرأ هذه الصفحة بالعربية"
+  },
+  "footer": {
+    "explore": "Explore",
+    "connect": "Connect",
+    "touch": "Get in touch",
+    "rss": "RSS feed",
+    "note": "Giving levels are symbolic. All contributions are pooled and allocated based on need."
+  },
+  "hero": {
+    "eyebrow": "A global initiative for the houses of Allah",
+    "h1": "Connect hearts to masajid,",
+    "h1em": "wherever they are.",
+    "lede": "One gift reaches a growing network of masajid, not just one. Together we build, repair and keep the doors open for houses of Allah in need.",
+    "cta": "See how it works",
+    "cta2": "Read the journal",
+    "facts": [
+      {
+        "title": "One gift",
+        "text": "A small monthly sadaqah, given once and renewed."
+      },
+      {
+        "title": "Pooled together",
+        "text": "Every contribution joins those of other givers."
+      },
+      {
+        "title": "Sent where it is needed",
+        "text": "Allocated to masajid according to need."
+      }
+    ]
+  },
+  "journal": {
+    "eyebrow": "The Journal",
+    "h2": "Short reads on masajid, and why they matter.",
+    "all": "All articles",
+    "read": "Read the article",
+    "min": "min read"
+  },
+  "mission": {
+    "eyebrow": "Our mission",
+    "statement": "To multiply your ongoing charity by connecting your heart to an entire",
+    "statementEm": "global network of masajid.",
+    "p1": "Most of us support one masjid: the one we pray in. Masjid Hearts lets a single donation reach across many communities worldwide, building, repairing and keeping the doors open for houses of Allah in urgent need.",
+    "p2": "One simple gift, an ever-growing network of masajid, and multiplied sadaqah jariyah (continuous charity) for your akhirah.",
+    "work": [
+      {
+        "title": "Build",
+        "text": "A new masjid where a community has none."
+      },
+      {
+        "title": "Restore",
+        "text": "A masjid that has been damaged or has fallen into disrepair."
+      },
+      {
+        "title": "Maintain",
+        "text": "An existing place of worship, so it stays safe and open."
+      },
+      {
+        "title": "Sustain",
+        "text": "The community a masjid serves: its prayer, its Qur’an, its people."
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "h2": "One gift.",
+    "h2em": "Many masajid.",
+    "lede": "You do not choose a single building. Your sadaqah joins a shared fund, and the fund goes to the masajid whose need is greatest at the time.",
+    "steps": [
+      {
+        "title": "You give a small amount each month",
+        "text": "A steady gift, however modest, is what lets a masjid plan beyond this week."
+      },
+      {
+        "title": "It is pooled with other givers",
+        "text": "Small gifts combined are enough to lay a foundation or repair a roof."
+      },
+      {
+        "title": "It is allocated by need",
+        "text": "Funds go to building, restoring, maintaining or sustaining masajid where support is needed most."
+      }
+    ],
+    "network": "One heart at the bottom connected by lines to seven masajid above it."
+  },
+  "why": {
+    "alt": "The prayer hall of a grand masjid: rows of red carpet running towards the mihrab beneath white arches and chandeliers.",
+    "quote": "“Whoever builds a masjid for Allah, Allah will build for him a house like it in Paradise.”",
+    "who": "The Prophet Muhammad ﷺ",
+    "source": "Sahih al-Bukhari 450 · Sahih Muslim 533"
+  },
+  "give": {
+    "eyebrow": "Choose your monthly impact",
+    "h2": "Help build, restore and sustain masajid.",
+    "lede": "For a small monthly contribution, you help masajid remain places where generations come together to pray, learn Qur’an and strengthen their communities.",
+    "perMonth": "/ month",
+    "fine": "Giving levels are symbolic. All contributions are pooled and allocated based on the needs of masajid and the communities they serve.",
+    "levels": [
+      {
+        "title": "Support 1 masjid",
+        "line": "Help support masajid and the communities they serve."
+      },
+      {
+        "title": "Support 5 masajid",
+        "line": "Extend your support to more masajid and communities around the world."
+      },
+      {
+        "title": "Support 10 masajid",
+        "line": "Make an even greater ongoing impact for masajid and the communities they serve."
+      }
+    ],
+    "button": "Give ${amount} a month"
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "h2": "Let’s keep the doors of a masjid open,",
+    "h2em": "together.",
+    "lede": "Whether you want to give, partner with us, or tell us about a masjid that needs help, we would love to hear from you.",
+    "who": [
+      {
+        "title": "Giving",
+        "text": "Ask how monthly giving works and how contributions are allocated."
+      },
+      {
+        "title": "Masajid",
+        "text": "Know of a masjid in need? Tell us about it."
+      },
+      {
+        "title": "Working together",
+        "text": "Questions, ideas and partnership enquiries are welcome."
+      }
+    ],
+    "direct": "Or write to us directly:",
+    "honeypot": "Leave this empty",
+    "name": "Your name",
+    "email": "Email address",
+    "role": "What brings you here?",
+    "roles": [
+      "I would like to give or support",
+      "I want to tell you about a masjid in need",
+      "I represent an organisation",
+      "Something else"
+    ],
+    "message": "Your message",
+    "send": "Send message",
+    "js": {
+      "badEmail": "Enter a valid email address so we can reply.",
+      "missing": "Fill in every field so we can reply.",
+      "sending": "Sending…",
+      "sent": "Message sent. JazakAllahu khayran, we will reply soon.",
+      "failEmail": "The message could not be sent. Email us at {email} instead.",
+      "fail": "The message could not be sent. Check your connection and send it again.",
+      "mailApp": "Your email app should now open with the message ready to send.",
+      "noInbox": "This form is not connected to an inbox yet. Please check back shortly.",
+      "prefill": "I would like to give ${amount} a month to Masjid Hearts. Please tell me how."
+    }
+  }
+}

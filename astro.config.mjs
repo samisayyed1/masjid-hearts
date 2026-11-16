@@ -24,6 +24,6 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin/') })],
   build: { inlineStylesheets: 'auto' },
 });
